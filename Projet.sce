@@ -1,4 +1,5 @@
-function W_eq = W_intersection(W0, par)
+function W_eq = W_intersection(W0, par) 
+    // Fonction qui trouve les zéros de f = g1(W0) -g2(W0)
     // Définition des tous les paramètres du système
     a1 = par(1);
     a2 = par(2);
@@ -21,6 +22,10 @@ function W_eq = W_intersection(W0, par)
     W_eq = g1 - g2; // Prend le milieu pour avoir la valeur à l'équilbre de la variation de W
 endfunction
 
+function hp = hillp(x,k,nn)
+    hp = x^nn /(x^nn + k^nn);
+endfunction
+
 // Main
 // Définition des paramaètres:
 // a1 =
@@ -36,10 +41,16 @@ endfunction
 
 // para = [a1, a2, a3, a4, gamma, gM, gP, n, K1, K4];
 
+W = [0.0:0.01:100];
+for i = 1 : length(W)
+    g1(i) = a4 * (W(i)^2) / (W(i)^2 + K4^2);
+    g1(i) = g1(i) / (gamma + W(i)) -gP/gamma;
+    plot(g1(1));
+
 
 // Définition de W0 ou "initial guess" Et définition de tous les points d'équilibre 
 W0 = K4 * 4;
-[W_st, feq] = fsolve(W0, list(W_intersection, para));
+[W_st, feq] = fsolve(W0, list(W_intersection, para)); // K4 à la place de W0 ? K4 est proche de W0
 m_st = (a1/gM) / (W^n + K1^n);
 Pc_st = (a2 / (a3 + gP)) * m_st;
 Pn_st = (a3 / (gP + gamma * W_st)) * Pc_st;
@@ -63,12 +74,12 @@ A(3,2) = a2;
 A(3,3) = - (a3 + gP);
 A(3,4) = 0;
 // dPn/dt
-A(4,1) = -gamma*Pn_st;
+A(4,1) = -gamma * Pn_st;
 A(4,2) = 0;
 A(4,3) = a3;
 A(4,4) = -gP -gamma * W_st;
 
-// Calcul des valeurs propres
+// Calcul des valeurs propres partie réelle négative --> poit équilibre stables
 vp = spec(A);
 
 // Calcul matrice jacobienne à W_st = Pc_st = Pn_st = m_st = 0
@@ -94,6 +105,13 @@ A0(4,2) = 0;
 A0(4,3) = a3;
 A0(4,4) = -gP;
 
+// Recalculer à l'autre équilibre trouvé par graphique g1-g2
+
+// Conditions initiales pout les oscillations
+x0t = [0.01;1;1;5];
+t0 = 0;
+dt = 0.001;
+tvec = t0:dt:30
 
 
 
