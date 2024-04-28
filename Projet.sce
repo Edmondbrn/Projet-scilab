@@ -42,6 +42,7 @@ n = 2;
 para = [a1, a2, a3, a4, gamma, gM, gP, n, K1, K4];
 
 
+
 W = [0.0:0.01:100]; // liste de W qui part de 0 par pas de 0.01 avec 100 éléments
 g1 = zeros(1, length(W)); // Initialisation d'un vecteur pour stocker les valeurs de g1
 g2 = zeros(1, length(W)); // Initialisation d'un vecteur pour stocker les valeurs de g2
@@ -59,28 +60,29 @@ end
 
 // Affiche le graphique de g1 et de g2
 f3 = (figure(3));
+xset('font size', 4);
 plot(W, g1, "r-", W, g2, "b-", W, W_intersection_test, "g-", 'linewidth', 3);
 f3.background = color("white");
 xlabel("W");
 legend('dW/dt = 0', 'dPnu/dt = 0', "dW/dt - dPnu/dt");
 
 [W_st, feq] = fsolve(K4 , list(W_intersection, para)); // K4 à la place de W0 ? K4 est proche de W0
+m_st = (a1/gM) * ( W_st^n /(W_st^n + K1^n));
+Pc_st = (a2 / (a3 + gP)) * m_st;
+Pn_st = (a3 / (gP + gamma * W_st)) * Pc_st;
 disp(W_st, feq) // W_st vaut environ 26.13 et feq 0 donc le modèle est valide
+// Définition de W0 ou "initial guess" Et définition de tous les points d'équilibre 
 
 scf(3);
 plot(W_st, (1/gamma) * (a4 * ((W_st^(n-1) / (K4^n + W_st^n)) - gP)), "k*" ,"linewidth", 3);
 xlabel("W");
 
-// Définition de W0 ou "initial guess" Et définition de tous les points d'équilibre 
-m_st = (a1/gM) * ( W_st^n /(W_st^n + K1^n));
-Pc_st = (a2 / (a3 + gP)) * m_st;
-Pn_st = (a3 / (gP + gamma * W_st)) * Pc_st;
 
 // Matrice jacobienne
 
 A = [];
 // dW/dt
-A(1,1) = (a4 * n * W_st^(n-1) / (K4^n + W_st^n)^2) -gP -gamma * Pn_st; // Dérivée partielle des équations de base par rapport à W
+A(1,1) = (a4 * n * W_st^(n-1) * K4^n / (K4^n + W_st^n)^2) - gP - gamma * Pn_st; // Dérivée partielle des équations de base par rapport à W
 A(1,2) = 0; // Par rapport à m
 A(1,3) = 0; // Par rapport à Pc
 A(1,4) = -gamma * W_st; // Par rapport à Pn
