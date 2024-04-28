@@ -12,7 +12,6 @@ function [v] = equations(t,x,pr)
     Frq = x(2); // ARNm
     Pcy = x(3);
     Pnu = x(4);
-
     a1 = pr(1);
     a2 = pr(2);
     a3 = pr(3);
@@ -20,30 +19,10 @@ function [v] = equations(t,x,pr)
     gamma = pr(5);
     gM = pr(6); // Correspond à gamma M
     gP = pr(7); // doit être inférieur à  1/2 * a4/K4
-
     K1 = pr(8);
     K4 = pr(9);
-
     n = pr(10);
     deg = gamma * Pnu * W;
-    
-    // Afficher les valeurs des variables
-    // disp('W = ', W);
-    // disp('Frq = ', Frq);
-    // disp('Pcy = ', Pcy);
-    // disp('Pnu = ', Pnu);
-    // disp('a1 = ', a1);
-    // disp('a2 = ', a2);
-    // disp('a3 = ', a3);
-    // disp('a4 = ', a4);
-    // disp('gamma = ', gamma);
-    // disp('gM = ', gM);
-    // disp('gP = ', gP);
-    // disp('K1 = ', K1);
-    // disp('K4 = ', K4);
-    // disp('n = ', n);
-    // disp('deg = ', deg);
-
     //Initialisation du vecteur des derivees
     v = [];
     v(1) = a4 * hillp(W, K4, n) - deg - gP * W;
@@ -51,8 +30,6 @@ function [v] = equations(t,x,pr)
     v(3)= a2 * Frq -a3 * Pcy - gP * Pcy;
     v(4) = a3 * Pcy -gP * Pnu -deg ;
     
-    // Afficher la valeur de v
-    // disp('v = ', v);
 endfunction
 
 
@@ -62,7 +39,6 @@ function S = sensibilite(par, tvec)
     X0 = [1;5;5;1];
     xsol=ode("stiff",X0,t0,tvec, list(equations,par) );
     periode = calculperiode(xsol(1,:), tvec);
-    
     // Calcul de la sensibilité
     for j = 1:10 // on parcourt tous les paramètres
         parS = par; // on copie les paramètres pour les comparer plus tard
@@ -79,7 +55,6 @@ function S = sensibilite(par, tvec)
         disp("La sensibilité du paramètre ", j, " est : ", Sj_S);
     end
 endfunction
-
 
 function amp = amplitude(par)
     X0 = [1;0.1;0.1;0.1];
@@ -203,8 +178,6 @@ endfunction
     
 
 
-
-
 a1 = 8;
 a2 = 7;
 a3 = 0.7;
@@ -224,27 +197,27 @@ tvec = t0:dt:150;
 
 
 sol=ode("stiff",x0,t0,tvec, list(equations,par) );
-// //Faire le graphe de la solution au cour du temps, dans la figure 1
-// //Options: couleur (r=red, b=blue,k=black,...), forme de ligne (-,--,:,-.)
-// f1 = (figure(1));
-// plot(tvec,sol(1,:),'b-',tvec,sol(2,:),'r-',tvec,sol(3,:),'g-',tvec,sol(4,:),'k-');
-// legend('W', 'Frq', 'Pcy', 'Pnu');
-// f1.background = color("white");
-// xlabel('Temps');
-// ylabel("Quantité");
-// set(gca(), 'font_size', 4); // Changer la taille de la police à 4
+//Faire le graphe de la solution au cour du temps, dans la figure 1
+//Options: couleur (r=red, b=blue,k=black,...), forme de ligne (-,--,:,-.)
+f1 = (figure(1));
+plot(tvec,sol(1,:),'b-',tvec,sol(2,:),'r-',tvec,sol(3,:),'g-',tvec,sol(4,:),'k-');
+legend('W', 'Frq', 'Pcy', 'Pnu');
+f1.background = color("white");
+xlabel('Temps');
+ylabel("Quantité");
+set(gca(), 'font_size', 4); // Changer la taille de la police à 4
 
-// // Calcul de la période d'oscillation
+// Calcul de la période d'oscillation
 
-//  // Trace le diagramme de phase W vs Pnu
-// f2 = (figure(2)); // Crée une nouvelle figure
-// plot(sol(1,:), sol(4,:), 'b-'); // Trace W en fonction de Pnu
-// xlabel('W'); // Ajoute un label à l'axe des x
-// ylabel('Pnu'); // Ajoute un label à l'axe des y
-// title('Diagramme de phase W vs Pnu'); // Ajoute un titre au graphique
-// f2.background = color("white"); // Change la couleur de fond de la figure
-// xgrid(); // Ajoute une grille sur l'axe des x
-// set(gca(), 'font_size', 4); // Changer la taille de la police à 4
+ // Trace le diagramme de phase W vs Pnu
+f2 = (figure(2)); // Crée une nouvelle figure
+plot(sol(1,:), sol(4,:), 'b-'); // Trace W en fonction de Pnu
+xlabel('W'); // Ajoute un label à l'axe des x
+ylabel('Pnu'); // Ajoute un label à l'axe des y
+title('Diagramme de phase W vs Pnu'); // Ajoute un titre au graphique
+f2.background = color("white"); // Change la couleur de fond de la figure
+xgrid(); // Ajoute une grille sur l'axe des x
+set(gca(), 'font_size', 4); // Changer la taille de la police à 4
 
 
 // // 4.2886148     42.282118      7.5341680
@@ -262,53 +235,24 @@ Periode=calculperiode(sol(1,:),tvec);
 disp(Periode);
 
 // // Méthode de la sensibilité
-// moyenne_S = sensibilite(par, tvec);
-// disp("La sensibilité est : ", moyenne_S);
+moyenne_S = sensibilite(par, tvec);
+disp("La sensibilité est : ", moyenne_S);
 
-// disp("les amplitudes sont:" , amplitude(par));
+disp("les amplitudes sont:" , amplitude(par));
 
 
 // Paramètres initiaux
 par_init = [8, 7, 0.5, 40, 0.15, 0.4, 0.01, 50, 0.7, 2]; // Remplacez par vos valeurs initiales
 // Estimation des paramètres
-par_est = fminsearch(fonction_cout, par_init);
-disp("Les paramètres estimés sont : ", par_est);
+// par_est = fminsearch(fonction_cout, par_init);
+// disp("Les paramètres estimés sont : ", par_est);
 
-// [periodes, a3s] = modif_a3(par_init);
-// f3 = figure(3);
-// plot(a3s, periodes, "ro-", 'LineWidth', 2); // Tracer la période en fonction de a3 avec une ligne rouge et une épaisseur de ligne de 2
-// xtitle('Evolution de la période en fonction de a3', 'a3', 'Période');
-// set(gca(), 'font_size', 4); // Changer la taille de la police à 4
-// xgrid(); // Ajouter une grille sur l'axe des x
-// f3.background = color("white"); // Change la couleur de fond de la figure
-
-
-// dataFRQ = [];
-// dataFrq = []; // données à prendre sur les données de départ
-// dataTemps = []
-// dt = 0.01;
-// tvec = [0:dt:200];
-// xsol = ode("stiff", x0, t0, tvec, list(equations, par));
-// // Données et modèles, amplitudes normalisées
-
-// Ptotal_modele = xsol(3, :) + xsol(4, :);
-// PnTot = Ptotal_modele / max(Ptotal_modele);
-// dataFRQn = dataFRQ / max(dataFRQ);
-// data_frq = dataFrq / max(dataFrq);
-// frq_modele = xsol(2, :) / max(xsol(2, :));
-
-// //Identifier 2 cycles du modèles a partir d'un maximum de frq_modele
-// L = length(frq_modele);
-// L3 = floor(0.25 * L);
-// [maxfrq, indicemaxfrq] = max(frq_modele(L3:L));
-
-// i2 = indicemaxfrq + 48/dt;
-// indices_T = [indicemaxfrq : 1 : i2];
-
-// offset = tvec(indicemaxfrq) - dataTemps(1);
+[periodes, a3s] = modif_a3(par_init);
+f3 = figure(3);
+plot(a3s, periodes, "ro-", 'LineWidth', 2); // Tracer la période en fonction de a3 avec une ligne rouge et une épaisseur de ligne de 2
+xtitle('Evolution de la période en fonction de a3', 'a3', 'Période');
+set(gca(), 'font_size', 4); // Changer la taille de la police à 4
+xgrid(); // Ajouter une grille sur l'axe des x
+f3.background = color("white"); // Change la couleur de fond de la figure
 
 
-
-// figure(4);
-// plot(tvec(indices_T) + offset, frq_modele(indices_T), 'r-');
-// plot(dataTemps, data_frq, 'b.'); //  on veut comparerr le modèle aux données théoriques
