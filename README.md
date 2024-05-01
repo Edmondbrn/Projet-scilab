@@ -32,6 +32,7 @@
 ### Etude des équilibres par la matrice jacobienne linéarisée
 - Equilibre nul
 Valeurs propres
+
 | Partie réelle | Partie imaginaire |
 | --------- | --------- |
 |-0.01   | 0 |   
