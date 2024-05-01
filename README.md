@@ -69,6 +69,7 @@ Notre système doit pouvoir osciller puisque nous voulons modéliser un cycle jo
 
 Nous avons calculé la période d'oscillation du système de deux manières différentes:
 - En se basant sur le portrait de phase de W et de P_nu (FRQ nucléaire), nous avons fixé le point de coordonnées (W_eq, Pn_eq). Nous avons ensuite extrait les intervalles de temps entre chaque passage de ce point et calculer la moyenne de ce dernier. Nous avons exclus les premiers temps (30%), afin d'éviter les biais par la mise en place de l'oscillation.
+
 ![App Screenshot](graph/Portrait_de_phase_W_Pnu.png)
 
 - La deuxième méthode se base sur une chronique de W en fonction du temps. Nous avons fixé un point (0.5*amplitude maxiamle) et nous avons également calculer les différents intervalles de temps pour l'atteindre. Nous avons aussi exclus les 30% premiers temps pour éviter les biais.
