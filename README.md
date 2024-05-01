@@ -114,4 +114,5 @@ Edmond BERNE
 - [@Edmondbrn](https://github.com/Edmondbrn)
 
 Julie FERIAU
+- [@julieferiau](https://github.com/julieferiau)
 
