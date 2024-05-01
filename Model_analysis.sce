@@ -38,10 +38,10 @@ gM = 0.4; // doit être inférieur à  1/2 * a4/K4
 K1 = 50;
 K4 = 0.7;
 n = 2;
-
+// para = [6.85776404e+00 ,7.96169636e+00, 5.16115481e-01, 2.39993029e+01,
+//  1.53461874e-01, 3.81329247e-01, 1.00000000e-02, 2.73160696e+01,
+//  6.27279798e-01, 2.00000000e+00]
 para = [a1, a2, a3, a4, gamma, gM, gP, n, K1, K4];
-
-
 
 W = [0.0:0.01:100]; // liste de W qui part de 0 par pas de 0.01 avec 100 éléments
 g1 = zeros(1, length(W)); // Initialisation d'un vecteur pour stocker les valeurs de g1
@@ -64,6 +64,8 @@ xset('font size', 4);
 plot(W, g1, "r-", W, g2, "b-", W, W_intersection_test, "g-", 'linewidth', 3);
 f3.background = color("white");
 xlabel("W");
+xgrid(); // Ajoute une grille sur l'axe des x
+set(gca(), 'font_size', 4); // Changer la taille de la police à 4
 legend('dW/dt = 0', 'dPnu/dt = 0', "dW/dt - dPnu/dt");
 
 [W_st, feq] = fsolve(K4 , list(W_intersection, para)); // K4 à la place de W0 ? K4 est proche de W0
@@ -74,8 +76,9 @@ disp(W_st, feq) // W_st vaut environ 26.13 et feq 0 donc le modèle est valide
 // Définition de W0 ou "initial guess" Et définition de tous les points d'équilibre 
 
 scf(3);
-plot(W_st, (1/gamma) * (a4 * ((W_st^(n-1) / (K4^n + W_st^n)) - gP)), "k*" ,"linewidth", 3);
+plot(W_st, (1/gamma) * (a4 * ((W_st^(n-1) / (K4^n + W_st^n)) - gP)), "k*" ,"linewidth", 3); // affiche le point d'intersection
 xlabel("W");
+xgrid(1);
 
 
 // Matrice jacobienne
