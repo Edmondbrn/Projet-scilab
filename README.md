@@ -10,13 +10,16 @@
 
 ## Modèle
 
-$ \frac{dW}{dt} = a_4 W_n K_{n4} + W_n - \gamma_P W - \gamma_{WP} W_{nu} $
+Les équations sont les suivantes :
 
-$ \frac{dm}{dt} = a_1 W_n K_{n1} + W_n - \gamma_{mm} $
+1. $$\frac{dW}{dt} = \frac{a4 \cdot Wn}{Kn4 + Wn} - \gamma_P \cdot W - \gamma_W \cdot P_{nu}$$
 
-$ \frac{dP_{cy}}{dt} = a_2 m - a_3 P_{cy} - \gamma_P P_{cy} $
+2. $$\frac{dm}{dt} = \frac{a1 \cdot Wn}{Kn1 + Wn} - \gamma_m \cdot m$$
 
-$ \frac{dP_{nu}}{dt} = a_3 P_{cy} - \gamma_P P_{nu} - \gamma_{WP} P_{nu} $
+3. $$\frac{dP_{cy}}{dt} = a2 \cdot m - a3 \cdot P_{cy} - \gamma_P \cdot P_{cy}$$
+
+4. $$\frac{dP_{nu}}{dt} = a3 \cdot P_{cy} - \gamma_P \cdot P_{nu} - \gamma_W \cdot P_{nu}$$
+
 
 ## Auteurs
 Edmond BERNE
