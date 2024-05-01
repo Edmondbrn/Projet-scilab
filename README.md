@@ -64,7 +64,7 @@ Il s'agit d'un équilibre instable.
 ### Capacité oscillatoire
 Notre système doit pouvoir osciller puisque nous voulons modéliser un cycle jour/nuit.
 
-![App Screenshot]("graph/oscillation_pre_optimisation.png")
+![Logo]("graph/oscillation_pre_optimisation.png")
 ## Période d'oscillation
 
 Nous avons calculé la période d'oscillation du système de deux manières différentes:
