@@ -44,7 +44,7 @@ Il s'agit d'un équilibre stable.
 
 - Equilibre d'intérêt
 
-![Logo]("Intersection_W_st.png")
+![Logo](Intersection_W_st.png)
 
 1. W_eq = 26.13
 2. m_eq = 4.29
