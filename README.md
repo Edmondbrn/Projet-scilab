@@ -2,7 +2,7 @@
 # Modélisation du cycle circadien de *Neurospora Crassa*
 
 ## Présentation
-   Ce projet vise à modéliser l'évolution des concetrations des deux grandes protéines régulant le cycle circadien du champignon ***Neurospora Crassa***. Nous avons sélectionné la protéine WCC et FRQ, pour FRQ nous avons différencié la protéine cytosolique et nucléaire. L'ARNm de FRQ a aussi été modélisé.
+   Ce projet vise à modéliser l'évolution des concentrations des deux grandes protéines régulant le cycle circadien du champignon ***Neurospora Crassa***. Nous avons sélectionné la protéine WCC et FRQ, pour FRQ nous avons différencié la protéine cytosolique et nucléaire. L'ARNm de FRQ a aussi été modélisé.
 
 ## Outils
 - Scilab deskstop pour l'analyse du système différentiel et pour certains graphiques simples
