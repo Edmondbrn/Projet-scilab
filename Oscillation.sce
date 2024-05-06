@@ -256,3 +256,18 @@ xgrid(); // Ajouter une grille sur l'axe des x
 f3.background = color("white"); // Change la couleur de fond de la figure
 
 
+para_est = [6.85776404e+00 ,7.96169636e+00, 5.16115481e-01, 2.39993029e+01,1.53461874e-01, 3.81329247e-01, 1.00000000e-02, 2.73160696e+01,6.27279798e-01, 2.00000000e+00];
+ 
+ 
+ sol=ode("stiff",x0,t0,tvec, list(equations,para_est) );
+//Faire le graphe de la solution au cour du temps, dans la figure 1
+//Options: couleur (r=red, b=blue,k=black,...), forme de ligne (-,--,:,-.)
+f5 = (figure(5));
+plot(tvec,sol(1,:),'b-',tvec,sol(2,:),'r-',tvec,sol(3,:),'g-',tvec,sol(4,:),'k-');
+legend('W', 'Frq', 'Pcy', 'Pnu');
+f5.background = color("white");
+xlabel('Temps');
+ylabel("Quantité");
+set(gca(), 'font_size', 4); // Changer la taille de la police à 4
+
+
